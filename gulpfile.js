@@ -16,6 +16,7 @@ var rimraf = require('gulp-rimraf');
 var watch = require('gulp-watch');
 var browserify = require('browserify');
 var source = require('vinyl-source-stream');
+var through = require('through');
 var nodeJS = process.execPath;
 
 // Scripts paths.
@@ -137,6 +138,17 @@ gulp.task('scripts', ['templates', 'oauth'], function() {
 
   // Browserify app scripts.
   return browserify('./app/boot.js')
+    .transform(function(file) {
+      var data = '';
+      return through(write, end);
+
+      function write (buf) { data += buf }
+      function end() {
+        // Todo: we could resolve the paths more nicely. Oh well.
+        this.queue(data.replace(/require\(['"]marked['"]\)/, "require('../marked')"));
+        this.queue(null);
+      }
+    })
     .bundle({debug: true})
     .pipe(source('app.js'))
     .pipe(gulp.dest('./dist/'))

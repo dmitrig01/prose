@@ -37,6 +37,7 @@
     "mocha-phantomjs": "~3.3.2",
     "phantomjs": "~1.9.7-4",
     "request": "~2.16.2",
+    "through": "^2.3.6",
     "uglify-js": "~2.2.5",
     "vinyl-source-stream": "^0.1.1"
   },
