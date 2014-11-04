@@ -8,7 +8,9 @@ module.exports = function(text, a, b) {
       a(null, request.responseText);
     }
     else if (typeof b == 'function') {
-      b(null, request.resonseText);
+      b(null, request.responseText);
     }
   }
+  console.log(request.responseText)
+  return request.responseText;
 };
